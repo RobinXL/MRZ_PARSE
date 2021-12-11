@@ -35,12 +35,13 @@ def scan(image_path):
     qualified_cnts = []
     for c in cnts:
         #Calculates a contour perimeter or a curve length
+        cnt_x, cnt_y, cnt_w, cnt_h = cv2.boundingRect(c)
         peri = cv2.arcLength(c, True)
         approx = cv2.approxPolyDP(c, 0.01 * peri, True)#0.02
         # if our approximated contour has four points, then we
         # can assume that we have found our screen
         screenCnt = approx
-        if len(approx) == 4:
+        if len(approx) == 4 and cnt_w > 450:
             qualified_cnts.append(approx)
             # screenCnt = approx
             # break
